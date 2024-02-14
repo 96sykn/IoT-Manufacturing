@@ -1,0 +1,28 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/obniz@3.24.0/obniz.js"></script>
+  <script type="text/javascript">
+   
+    /*  ②ここに必要な変数宣言を書きます  */
+    
+    const obniz = new Obniz('2762-6883'); //Obniz_ID
+
+    obniz.onconnect = async () => {
+    obniz.io0.pull("5v"); //IO0をプルアップ
+    obniz.io1.output(false); //IO1をGNDに
+    
+    obniz.io0.input(function(value){
+        console.log("changed to " + value);
+    });
+}
+    
+  </script>
+</head>
+<body>
+  <div id="obniz-debug"></div>
+  <h1>Webプログラミング入門(obniz)</h1>
+  <!--  ①ここに任意のHTMLを書きます -->
+  
+</body>
+</html>
