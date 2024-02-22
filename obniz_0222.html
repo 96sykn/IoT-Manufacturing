@@ -1,0 +1,47 @@
+<html>
+<head>
+    <script src="jquery-3.7.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/obniz@3.24.0/obniz.js"></script>
+    <script type="text/javascript">
+   
+    /*  ②ここに必要な変数宣言を書きます  */
+    
+    const obniz1 = new Obniz('2899-8541'); //刀のobniz
+    obniz1.onconnect = async function() {
+      const obniz2 =new Obniz('0033-9794');//竹のobniz
+      obniz2.onconnect = async function() {
+      obniz1.io0.pull("5v"); //IO0をプルアップ
+      obniz1.io7.output(false); //IO1をGNDに
+      const servo = obniz2.wired("ServoMotor", {gnd:0,vcc:1,signal:2});
+      let flg=0;
+    
+      obniz1.io0.input(function(value){
+        console.log("changed to " + value);
+        $("#res").click(function(){
+            if(value==false)flg=1;
+            if(value==true)flg=0;
+            servo.angle(0);
+        })
+        if(value==false&&flg==0){
+            flg=1;
+        }
+        if(value==true&&flg==1){
+            flg=2;
+        }
+        if(value==false&&flg==2){
+            servo.angle(180);
+        }
+    });
+  }
+}
+    
+  </script>
+</head>
+<body>
+  <div id="obniz-debug"></div>
+  <h1>Webプログラミング入門(obniz)</h1>
+  <!--  ①ここに任意のHTMLを書きます -->
+  <button id="res">reset</button>
+</body>
+</html>
