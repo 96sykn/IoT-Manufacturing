@@ -1,0 +1,38 @@
+<html>
+<head>
+    <script src="jquery-3.7.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/obniz@3.24.0/obniz.js"></script>
+    <script type="text/javascript">
+
+   
+    /*  ②ここに必要な変数宣言を書きます  */
+    
+    const obniz = new Obniz('0033-9794'); 
+    obniz.onconnect = async function() {
+      const servo = obniz.wired("ServoMotor", {gnd:0,vcc:1,signal:2});
+    
+      
+        $("#zero").click(function(){
+            servo.angle(0);
+        })
+        $("#half").click(function(){
+            servo.angle(90);
+        })
+        $("#full").click(function(){
+            servo.angle(180);
+        })
+    };
+  
+    
+  </script>
+</head>
+<body>
+  <div id="obniz-debug"></div>
+  <h1>Webプログラミング入門(obniz)</h1>
+  <!--  ①ここに任意のHTMLを書きます -->
+  <button id="zero">0</button>
+  <button id="half">90</button>
+  <button id="full">180</button>
+</body>
+</html>
